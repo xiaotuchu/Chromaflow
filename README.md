@@ -49,4 +49,4 @@ npm run preview
 
 Hash 路由优先保证静态托管兼容性；没有保留旧 PHP 生成各页面 SEO 标签的方式。搜索爬虫的逐文章索引能力有限，如需恢复可在后续增加静态预渲染。
 
-联系邮箱默认沿用原项目。需要更换时，在构建环境设置 `VITE_CONTACT_EMAIL`，或修改 `services/appConfig.ts`。此值会公开在前端，不要放入密码或密钥。
+联系邮箱默认沿用原项目。需要更换时，在构建环境设置 `VITE_CONTACT_EMAIL`，或修改 `src/config/app.ts`。此值会公开在前端，不要放入密码或密钥。
