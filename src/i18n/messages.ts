@@ -55,7 +55,7 @@ const messages = {
           {
             title: "Analytics & Progress",
             description:
-              "Review your latest 20 rounds in this browser, compare color matches, and follow your recent accuracy. No account required.",
+              "Review your latest 50 rounds in this browser, compare color matches, and follow your recent accuracy. No account required.",
           },
         ],
       },
@@ -179,7 +179,7 @@ const messages = {
           {
             title: "数据分析与成长",
             description:
-              "在当前浏览器保留最近 20 次练习，对比目标色与匹配色，查看近期准确率，无需注册账号。",
+              "在当前浏览器保留最近 50 次练习，对比目标色与匹配色，查看近期准确率，无需注册账号。",
           },
         ],
       },

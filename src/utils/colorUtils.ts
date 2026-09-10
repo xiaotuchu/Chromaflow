@@ -205,8 +205,10 @@ export const calculateScore = (
   const sDist = Math.abs(sDiff) / 100;
   const vDist = Math.abs(vDiff) / 100;
 
-  const totalError = (hDist + sDist + vDist) / 3;
-  const score = Math.max(0, Math.round((1 - totalError) * 100));
+  // Hue is the strongest visual cue. A weighted distance followed by a
+  // quadratic curve makes visible mismatches fall off faster than an average.
+  const totalError = Math.sqrt(0.5 * hDist ** 2 + 0.25 * sDist ** 2 + 0.25 * vDist ** 2);
+  const score = Math.max(0, Math.round((1 - totalError) ** 2 * 100));
 
   return {
     score,

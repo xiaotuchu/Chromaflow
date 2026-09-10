@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CircleAlert } from "lucide-react";
 import { ColorFeedback, HSV, ColorMode } from "../../types/color";
 import { hsvToCss, hsvToRgb, hsvToHsl } from "../../utils/colorUtils";
 import { getRoutePath } from "../../routes";
@@ -24,7 +25,6 @@ const ResultAnalysis: React.FC<ResultAnalysisProps> = ({
   const copy =
     locale === "zh"
       ? {
-          resultAnalysis: "结果分析",
           targetLabel: "目标值",
           targetSwatch: "目标色",
           yourMatch: "你的匹配",
@@ -38,7 +38,6 @@ const ResultAnalysis: React.FC<ResultAnalysisProps> = ({
           degreeUnit: "\u00B0",
         }
       : {
-          resultAnalysis: "Result Analysis",
           targetLabel: "Target",
           targetSwatch: "Target",
           yourMatch: "Your Match",
@@ -110,32 +109,27 @@ const ResultAnalysis: React.FC<ResultAnalysisProps> = ({
   return (
     <div className="mt-6 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 animate-fade-in ring-4 ring-slate-50">
       <div className="mb-6 flex justify-between items-start">
-        <div>
-          <h2 className="text-xl font-bold text-slate-900">
-            {copy.resultAnalysis}
-          </h2>
-          <p className="text-slate-500 text-sm mt-1">{feedback.message}</p>
-          {saveStatus !== null && (
-            <div className="mt-4 flex flex-col gap-3 rounded-2xl border border-sky-200 bg-gradient-to-r from-sky-50 via-white to-indigo-50 px-4 py-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-slate-800">
-                  {saveStatus === "saved" ? (locale === "zh" ? "已保存到本机历史（最近 20 条）" : "Saved on this device (latest 20 rounds)") : (locale === "zh" ? "无法保存：浏览器存储不可用或空间不足。" : "Could not save: browser storage is unavailable or full.")}
-                </p>
-                <p className="mt-1 text-sm leading-6 text-slate-500">
-                  {locale === "zh" ? "清除浏览器数据会删除本地记录，记录不会跨设备同步。" : "Clearing browser data removes history. Records do not sync across devices."}
-                </p>
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <h2 className="text-xl font-bold text-slate-900">{feedback.message}</h2>
+            {saveStatus === "failed" && (
+              <div data-save-status className="inline-flex items-center gap-1.5 rounded-full border border-red-100 bg-red-50 px-2.5 py-1 text-xs font-semibold text-red-600">
+                <CircleAlert size={14} strokeWidth={2.5} />
+                {locale === "zh" ? "无法保存" : "Could not save"}
               </div>
-              <Link
-                to={getRoutePath(locale, "profile")}
-                className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
-              >
-                {locale === "zh" ? "查看历史" : "View history"}
-              </Link>
-            </div>
-          )}
+            )}
+          </div>
+          {saveStatus === "saved" && <Link
+            to={getRoutePath(locale, "profile")}
+            className="mt-2 inline-flex text-xs font-normal text-slate-500 transition hover:font-semibold hover:text-[#4338ca] focus:outline-none focus:ring-2 focus:ring-[#4338ca] focus:ring-offset-2"
+          >
+            {locale === "zh" ? "本次练习记录已保存，点击查看历史" : "This practice round was saved. View history"}
+          </Link>}
         </div>
-        <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-purple-600">
-          {feedback.score}
+        <div className="ml-4 shrink-0">
+          <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-purple-600">
+            {feedback.score}
+          </div>
         </div>
       </div>
 

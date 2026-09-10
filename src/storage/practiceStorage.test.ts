@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { clearHistory, readHistory, saveRecord, HISTORY_KEY } from './practiceStorage';
+import { clearHistory, readHistory, readLatestRecord, saveRecord, HISTORY_KEY, HISTORY_LIMIT } from './practiceStorage';
 
 const payload = { mode: 'HSV' as const, target: { h: 120, s: 50, v: 60 }, guess: { h: 110, s: 40, v: 55 } };
 let data: Map<string, string>;
@@ -13,12 +13,13 @@ beforeEach(() => {
   });
 });
 
-it('persists the latest 20 submissions in newest-first order, with unique ids', () => {
-  for (let h = 0; h < 25; h++) saveRecord({ ...payload, target: { ...payload.target, h } });
+it('persists the latest 50 submissions in newest-first order, with unique ids', () => {
+  for (let h = 0; h < 55; h++) saveRecord({ ...payload, target: { ...payload.target, h } });
   const records = readHistory();
-  expect(records).toHaveLength(20);
-  expect(records.map(r => r.target.h)).toEqual(Array.from({ length: 20 }, (_, i) => 24 - i));
-  expect(new Set(records.map(r => r.id)).size).toBe(20);
+  expect(HISTORY_LIMIT).toBe(50);
+  expect(records).toHaveLength(50);
+  expect(records.map(r => r.target.h)).toEqual(Array.from({ length: 50 }, (_, i) => 54 - i));
+  expect(new Set(records.map(r => r.id)).size).toBe(50);
   expect(JSON.parse(data.get(HISTORY_KEY)!)).toEqual(records);
 });
 
@@ -50,6 +51,12 @@ it('reads newly persisted data instead of a stale in-memory cache', () => {
   expect(readHistory()[0].mode).toBe('RGB');
 });
 
+it('returns the newest saved record for restoring the most recent practice result', () => {
+  saveRecord({ ...payload, target: { ...payload.target, h: 20 } });
+  const latest = saveRecord({ ...payload, target: { ...payload.target, h: 30 } });
+  expect(readLatestRecord()).toEqual(latest);
+});
+
 it('rejects invalid submissions without damaging existing history', () => {
   saveRecord(payload);
   expect(() => saveRecord({ ...payload, guess: { h: NaN, s: 10, v: 10 } })).toThrow();
@@ -58,6 +65,12 @@ it('rejects invalid submissions without damaging existing history', () => {
 
 it('can save on HTTP static hosts where randomUUID is not available', () => {
   vi.stubGlobal('crypto', { getRandomValues: (array: Uint32Array) => array.fill(123456) });
+  expect(saveRecord(payload).id).toBeTruthy();
+  expect(readHistory()).toHaveLength(1);
+});
+
+it('persists when the Web Crypto global is unavailable', () => {
+  vi.stubGlobal('crypto', undefined);
   expect(saveRecord(payload).id).toBeTruthy();
   expect(readHistory()).toHaveLength(1);
 });

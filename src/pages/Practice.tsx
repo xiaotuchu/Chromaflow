@@ -12,7 +12,7 @@ import {
   rgbToHex,
   hexToHsv,
 } from "../utils/colorUtils";
-import { saveRecord } from "../storage/practiceStorage";
+import { readLatestRecord, saveRecord } from "../storage/practiceStorage";
 import { useLocale } from "../i18n/LocaleProvider";
 import { createPageSeo } from "../utils/seo";
 import { usePageSeo } from "../hooks/usePageSeo";
@@ -46,7 +46,18 @@ const Practice: React.FC = () => {
         };
 
   useEffect(() => {
-    resetRound();
+    const latestRecord = readLatestRecord();
+    if (!latestRecord) {
+      resetRound();
+      return;
+    }
+
+    setTargetColor(latestRecord.target);
+    setUserColor(latestRecord.guess);
+    setColorMode(latestRecord.mode);
+    setFeedback(calculateScore(latestRecord.target, latestRecord.guess, locale));
+    setSaveStatus("saved");
+    setShowFeedbackMarkers(true);
   }, []);
 
 

@@ -55,7 +55,7 @@ const pageSeoDefinitions: Record<Locale, Record<PageSeoKey, SeoDefinition>> = {
     privacy: {
       title: "Privacy Policy | Chromaflow",
       description:
-        "Learn how Chromaflow keeps the latest 20 practice records in your browser and processes images locally.",
+        "Learn how Chromaflow keeps the latest 50 practice records in your browser and processes images locally.",
       path: "/privacy",
     },
     terms: {
@@ -93,7 +93,7 @@ const pageSeoDefinitions: Record<Locale, Record<PageSeoKey, SeoDefinition>> = {
     privacy: {
       title: "隐私政策 | Chromaflow",
       description:
-        "了解 Chromaflow 如何在浏览器本地保存最近 20 条练习记录，以及如何在本机处理图片。",
+        "了解 Chromaflow 如何在浏览器本地保存最近 50 条练习记录，以及如何在本机处理图片。",
       path: "/privacy",
     },
     terms: {

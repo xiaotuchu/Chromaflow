@@ -1,7 +1,7 @@
 # Chromaflow2 Implementation Plan
 
 **Goal:** Preserve Chromaflow color practice as an independent frontend-only application.
-**Architecture:** React UI with browser-local history (latest 20 records); no accounts, PHP, database, SMTP, or API keys. Hash routing works on static hosts without rewrite rules.
+**Architecture:** React UI with browser-local history (latest 50 records); no accounts, PHP, database, SMTP, or API keys. Hash routing works on static hosts without rewrite rules.
 **Tech Stack:** TypeScript, React 19, Vite 7, Tailwind CSS 3, Vitest.
 
 1. Copy frontend sources and dependency lockfile into chromaflow2; exclude environments, build output and dependencies.
