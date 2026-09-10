@@ -1,0 +1,14 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="chromaflow-favicon-gradient" x1="10" y1="10" x2="54" y2="54" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#9333EA"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="48" height="48" rx="12" fill="url(#chromaflow-favicon-gradient)"/>
+  <path d="M31.9999 47C23.1634 47 16 39.8366 16 31.0001C16 22.1635 23.1634 15 31.9999 15C40.1168 15 47.2585 20.6571 48 28.6955C48.0308 29.0298 48.0464 29.3687 48.0464 29.7114C48.0464 33.9557 44.606 37.3962 40.3616 37.3962H37.4119C35.9839 37.3962 34.8263 38.5538 34.8263 39.9818C34.8263 40.5347 35.0042 41.073 35.3338 41.5169L35.6575 41.9528C36.5392 43.1398 35.6921 44.8287 34.2134 44.8287H33.1712C32.7857 44.9425 32.3929 47 31.9999 47Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="35.75" cy="22.75" r="1.75" fill="white"/>
+  <circle cx="42.25" cy="29.25" r="1.75" fill="white"/>
+  <circle cx="24.25" cy="32.75" r="1.75" fill="white"/>
+  <circle cx="27.75" cy="24.25" r="1.75" fill="white"/>
+</svg>

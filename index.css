@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.98);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-from-top-5 {
+  from {
+    opacity: 0;
+    transform: translateY(-1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-blob {
+  animation: blob 18s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 200ms ease-out both;
+}
+
+.animate-in {
+  animation-duration: 200ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+.slide-in-from-top-5 {
+  animation-name: slide-in-from-top-5;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+.kb-markdown {
+  color: #475569;
+  line-height: 1.8;
+}
+
+.kb-markdown h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.kb-markdown h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.kb-markdown p {
+  margin-top: 0.75rem;
+}
+
+.kb-markdown ol {
+  margin-top: 0.75rem;
+  padding-left: 1.5rem;
+  list-style: decimal;
+}
+
+.kb-markdown li {
+  margin-top: 0.5rem;
+}
+
+.kb-markdown strong {
+  color: #0f172a;
+}
+
+.kb-markdown {
+  color: #475569;
+  line-height: 1.8;
+}
+
+.kb-markdown h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.kb-markdown h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.kb-markdown p {
+  margin-top: 0.75rem;
+}
+
+.kb-markdown ol {
+  margin-top: 0.75rem;
+  padding-left: 1.5rem;
+  list-style: decimal;
+}
+
+.kb-markdown li {
+  margin-top: 0.5rem;
+}
+
+.kb-markdown strong {
+  color: #0f172a;
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Chromaflow",
+  "description": "A minimalist color sensitivity training application for designers and artists using HSV matching.",
+  "requestFramePermissions": []
+}

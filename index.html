@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Practice for Beginners | Chromaflow</title>
+    <meta
+      name="description"
+      content="Practice color matching, hue, saturation, and value with Chromaflow. Built for beginner painters, drawing learners, designers, and anyone training color judgment."
+    />
+    <meta
+      name="keywords"
+      content="color practice,color training,color matching,color perception training,hue saturation value,beginner painting,drawing beginners,color theory practice"
+    />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="theme-color" content="#f8fafc" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Chromaflow" />
+    <meta property="og:title" content="Color Practice for Beginners | Chromaflow" />
+    <meta
+      property="og:description"
+      content="Practice color matching and color perception with focused exercises, beginner-friendly training, and a bilingual color theory knowledge base."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Color Practice for Beginners | Chromaflow" />
+    <meta
+      name="twitter:description"
+      content="Sharpen color sensitivity with structured color matching practice for beginner painters and visual learners."
+    />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      /* Custom Slider Styles for Webkit */
+      input[type=range] {
+        -webkit-appearance: none;
+        background: transparent;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: transparent; /* Transparent middle */
+        border: 2px solid #ffffff; /* White ring, slightly thinner for smaller size */
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        margin-top: 0px; /* (TrackHeight 16px - ThumbHeight 16px) / 2 = 0 */
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 16px;
+        cursor: pointer;
+        border-radius: 9999px;
+      }
+      /* Firefox Styles */
+      input[type=range]::-moz-range-thumb {
+        height: 16px;
+        width: 16px;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      }
+      input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 16px;
+        cursor: pointer;
+        border-radius: 9999px;
+      }
+    </style>
+</head>
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-100 selection:text-indigo-700">
+    <div id="root"></div>
+    <noscript>
+      <main style="max-width: 48rem; margin: 0 auto; padding: 3rem 1.5rem; line-height: 1.6;">
+        <h1>Color Practice with Chromaflow</h1>
+        <p>
+          Practice color matching through repeatable exercises, progress tracking, and a
+          bilingual color theory knowledge base for beginner painters and visual learners.
+        </p>
+        <p>
+          Start here:
+          <a href="#/en">English</a>
+          |
+          <a href="#/zh">中文</a>
+          |
+          <a href="#/en/knowledge-base">Knowledge Base</a>
+        </p>
+      </main>
+    </noscript>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
