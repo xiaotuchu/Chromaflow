@@ -4,3 +4,9 @@ dist/
 .env.*
 .history/
 !.env.example
+docs/
+tests/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
