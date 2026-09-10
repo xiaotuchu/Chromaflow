@@ -50,3 +50,7 @@ npm run preview
 Hash 路由优先保证静态托管兼容性；没有保留旧 PHP 生成各页面 SEO 标签的方式。搜索爬虫的逐文章索引能力有限，如需恢复可在后续增加静态预渲染。
 
 联系邮箱默认是 `chromaflow@xiaotu.asia`。需要更换时，在构建环境设置 `VITE_CONTACT_EMAIL`，或修改 `src/config/app.ts`。此值会公开在前端，不要放入密码或密钥。
+
+### GitHub Pages
+
+仓库已提供 `.github/workflows/deploy.yml`。将代码推送到 `main` 后，在 GitHub 仓库的 **Settings → Pages** 将发布源选为 **GitHub Actions**；工作流会构建并发布 `dist/`。项目仓库的地址通常为 `https://<用户名>.github.io/<仓库名>/#/zh/`。
