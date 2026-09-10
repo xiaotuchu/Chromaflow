@@ -1,6 +1,25 @@
-# Chromaflow2
+# Chromaflow
 
-从 `chromaflow/frontend` 独立出来的纯前端版本，沿用 TypeScript、React 19、Vite 7 和 Tailwind CSS 3。
+Chromaflow 是一个面向绘画初学者和视觉学习者的色彩匹配练习网站。它完全在浏览器中运行，不需要账号，也不依赖应用后端。
+
+## 功能
+
+- 支持 HSV、RGB 和 HSL 三种色彩模式的匹配练习。
+- 随机生成目标色，也可通过调色板和本地图片取色设置目标色。
+- 提交后提供评分、色相、饱和度和明度差异分析。
+- 自动在当前浏览器保存最近 50 次练习记录，可按提交模式查看、下载 CSV 或清空记录。
+- 重新进入练习页时恢复最近一次提交的练习结果。
+- 提供中英文界面和色彩知识库内容。
+
+图片仅在浏览器本地处理，不会上传到服务器。
+
+## 技术栈
+
+- TypeScript
+- React 19
+- Vite 7
+- Tailwind CSS 3
+- React Router（HashRouter）
 
 ## 本地运行
 
@@ -11,7 +30,9 @@ npm ci
 npm run dev
 ```
 
-打开终端显示的地址，默认 `http://127.0.0.1:3000`。
+开发服务器默认地址为 `http://127.0.0.1:3000`。
+
+## 检查与构建
 
 ```sh
 npm test
@@ -20,37 +41,37 @@ npm run build
 npm run preview
 ```
 
-## 保留的功能
+生产构建产物位于 `dist/`。
 
-- 原版首页与界面风格、中英文切换。
-- HSV、RGB、HSL 色彩匹配练习、随机和自选目标色、结果分析。
-- 图片取色和手动编辑色板。图片只在浏览器内处理，不上传、不存入历史；取色库随构建产物发布。
-- 中英文色彩知识库及文章。
-- 本地练习历史：按时间倒序、模式和日期筛选、分页、平均分和清空记录。
-- 邮件联系入口，以及适用于本地版本的隐私和使用说明。
+## 本地数据
 
-账号、注册、密码、云端同步、打卡和后端联系表单已移除。没有 PHP、数据库、后端 API、广告或统计脚本，也不需要 API Key。
+练习记录保存在浏览器 localStorage 中，最多保留最近 50 条。记录包含提交时间、色彩模式、目标色和匹配色，不包含图片。
 
-## 本地记录
+数据只存在当前浏览器和当前网站地址下：更换浏览器、设备、域名或端口后不会共享；清除浏览器站点数据后无法恢复。练习历史页可下载 CSV 作为本地备份。
 
-每次提交练习保存一条记录，使用 localStorage 键 `chromaflow2.history.v1`，最多保留最新 **50 条**，新增时自动淘汰最旧记录。记录包含时间、模式、目标色和匹配色，不包含图片。
+## GitHub Pages 部署
 
-语言偏好使用 `chromaflow2.locale`。同源标签页会同步刷新历史视图；不同域名、端口、浏览器和设备之间不共享数据。多标签页同时提交时，localStorage 不提供事务保证。
+仓库已包含 GitHub Pages 工作流：[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)。
 
-清除浏览器数据后无法恢复历史。旧项目的账号和服务器记录不会自动迁移。浏览器禁止存储或空间不足时，仍能练习并查看评分，页面会提示此次结果未保存。
+1. 将代码推送到 `main` 分支。
+2. 在 GitHub 仓库中打开 **Settings → Pages**。
+3. 将发布来源设为 **GitHub Actions**。
+4. 等待 **Deploy GitHub Pages** 工作流完成。
 
-## 静态部署
+项目页面通常可通过以下地址访问：
 
-1. 执行 `npm ci`、`npm run build`。
-2. 将 `dist/` 内全部文件部署到任意静态托管服务，例如静态 Pages 或对象存储网站托管。
-3. 无需启动 Node.js 服务、PHP、数据库或配置 API 地址。
+```text
+https://<GitHub 用户名>.github.io/<仓库名>/#/zh/
+```
 
-使用 HashRouter，例如 `/#/zh/practice`，并采用相对资源路径；根目录和子目录均可部署，刷新页面不依赖服务器重写规则。不要直接双击打开 HTML，应通过 HTTP/HTTPS 访问。开发命令运行的 Vite 仅用于本地开发，不是生产后端。
+该项目使用 HashRouter，因此适合部署在 GitHub Pages 等静态托管服务中。
 
-Hash 路由优先保证静态托管兼容性；没有保留旧 PHP 生成各页面 SEO 标签的方式。搜索爬虫的逐文章索引能力有限，如需恢复可在后续增加静态预渲染。
+## 联系邮箱
 
-联系邮箱默认是 `chromaflow@xiaotu.asia`。需要更换时，在构建环境设置 `VITE_CONTACT_EMAIL`，或修改 `src/config/app.ts`。此值会公开在前端，不要放入密码或密钥。
+默认联系邮箱为 `chromaflow@xiaotu.asia`。如需替换，可在构建环境中设置：
 
-### GitHub Pages
+```text
+VITE_CONTACT_EMAIL=your-email@example.com
+```
 
-仓库已提供 `.github/workflows/deploy.yml`。将代码推送到 `main` 后，在 GitHub 仓库的 **Settings → Pages** 将发布源选为 **GitHub Actions**；工作流会构建并发布 `dist/`。项目仓库的地址通常为 `https://<用户名>.github.io/<仓库名>/#/zh/`。
+该变量会打包到前端，请勿放入密码、令牌或其他密钥。
