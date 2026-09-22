@@ -2,10 +2,13 @@ import React from "react";
 import { HSV, RGB, HSL, ColorMode } from "../../types/color";
 import { hsvToCss } from "../../utils/colorUtils";
 import { useLocale } from "../../i18n/LocaleProvider";
+import type { Channel } from "../../utils/practiceColor";
 import Slider from "./Slider";
 
 interface SlidersListProps {
   mode: ColorMode;
+  lockedChannels: Channel[];
+  hideHue: boolean;
   userColor: HSV;
   targetColor: HSV;
   rgb: RGB;
@@ -20,6 +23,8 @@ interface SlidersListProps {
 
 const SlidersList: React.FC<SlidersListProps> = ({
   mode,
+  lockedChannels,
+  hideHue,
   userColor,
   targetColor,
   rgb,
@@ -58,8 +63,9 @@ const SlidersList: React.FC<SlidersListProps> = ({
   if (mode === "HSV") {
     return (
       <>
-        <Slider
+        {!hideHue && (<Slider
           label={copy.hue}
+          disabled={lockedChannels.includes("h")}
           value={userColor.h}
           max={360}
           unit={copy.degreeUnit}
@@ -69,9 +75,10 @@ const SlidersList: React.FC<SlidersListProps> = ({
               "linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
           }}
           feedbackMark={showFeedbackMarkers ? targetColor.h : undefined}
-        />
+        />)}
         <Slider
           label={copy.saturation}
+          disabled={lockedChannels.includes("s")}
           value={userColor.s}
           max={100}
           unit="%"
@@ -87,6 +94,7 @@ const SlidersList: React.FC<SlidersListProps> = ({
         />
         <Slider
           label={copy.value}
+          disabled={lockedChannels.includes("v")}
           value={userColor.v}
           max={100}
           unit="%"
@@ -109,6 +117,7 @@ const SlidersList: React.FC<SlidersListProps> = ({
       <>
         <Slider
           label={copy.red}
+          disabled={lockedChannels.includes("r")}
           value={rgb.r}
           max={255}
           onChange={(v: number) => handleRgbChange("r", v)}
@@ -119,6 +128,7 @@ const SlidersList: React.FC<SlidersListProps> = ({
         />
         <Slider
           label={copy.green}
+          disabled={lockedChannels.includes("g")}
           value={rgb.g}
           max={255}
           onChange={(v: number) => handleRgbChange("g", v)}
@@ -129,6 +139,7 @@ const SlidersList: React.FC<SlidersListProps> = ({
         />
         <Slider
           label={copy.blue}
+          disabled={lockedChannels.includes("b")}
           value={rgb.b}
           max={255}
           onChange={(v: number) => handleRgbChange("b", v)}
@@ -144,8 +155,9 @@ const SlidersList: React.FC<SlidersListProps> = ({
   if (mode === "HSL") {
     return (
       <>
-        <Slider
+        {!hideHue && (<Slider
           label={copy.hue}
+          disabled={lockedChannels.includes("h")}
           value={hsl.h}
           max={360}
           unit={copy.degreeUnit}
@@ -155,9 +167,10 @@ const SlidersList: React.FC<SlidersListProps> = ({
               "linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
           }}
           feedbackMark={showFeedbackMarkers ? targetHsl.h : undefined}
-        />
+        />)}
         <Slider
           label={copy.saturation}
+          disabled={lockedChannels.includes("s")}
           value={hsl.s}
           max={100}
           unit="%"
@@ -169,6 +182,7 @@ const SlidersList: React.FC<SlidersListProps> = ({
         />
         <Slider
           label={copy.lightness}
+          disabled={lockedChannels.includes("l")}
           value={hsl.l}
           max={100}
           unit="%"

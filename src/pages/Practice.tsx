@@ -5,9 +5,8 @@ import PaletteControls from "../components/practice/PaletteControls";
 import ResultAnalysis from "../components/practice/ResultAnalysis";
 import ImageTools from "../components/practice/ImageTools";
 import ImageColorModal from "../components/practice/ImageColorModal";
-import { HSV, ColorFeedback, ColorMode } from "../types/color";
+import { HSV, HSL, ColorFeedback, ColorMode } from "../types/color";
 import {
-  generateRandomColor,
   calculateScore,
   rgbToHex,
   hexToHsv,
@@ -16,17 +15,21 @@ import { readLatestRecord, saveRecord } from "../storage/practiceStorage";
 import { useLocale } from "../i18n/LocaleProvider";
 import { createPageSeo } from "../utils/seo";
 import { usePageSeo } from "../hooks/usePageSeo";
+import { selectionFromHsv, selectionFromHsl, constrainSelection, applyChannelLocks, toggleChannelLock, randomizeUnlocked, type Channel, type ChannelValues } from "../utils/practiceColor";
 
 const Practice: React.FC = () => {
   const { locale } = useLocale();
   usePageSeo(createPageSeo(locale, "practice"));
 
   const [targetColor, setTargetColor] = useState<HSV>({ h: 0, s: 0, v: 0 });
-  const [userColor, setUserColor] = useState<HSV>({ h: 0, s: 0, v: 0 });
+  const [selection, setSelection] = useState(() => selectionFromHsv({ h: 0, s: 0, v: 0 }));
+  const userColor = selection.hsv;
   const [feedback, setFeedback] = useState<ColorFeedback | null>(null);
   const [showFeedbackMarkers, setShowFeedbackMarkers] = useState(false);
   const [activeTab, setActiveTab] = useState<"split" | "overlay">("split");
   const [colorMode, setColorMode] = useState<ColorMode>("HSV");
+  const [lockedValues, setLockedValues] = useState<ChannelValues>({});
+  const lockedChannels = Object.keys(lockedValues) as Channel[];
   const [saveStatus, setSaveStatus] = useState<"saved" | "failed" | null>(null);
   const [extractedPalette, setExtractedPalette] = useState<HSV[]>([]);
   const [uploadedImageSrc, setUploadedImageSrc] = useState<string | null>(null);
@@ -53,7 +56,7 @@ const Practice: React.FC = () => {
     }
 
     setTargetColor(latestRecord.target);
-    setUserColor(latestRecord.guess);
+    setSelection(selectionFromHsv(latestRecord.guess));
     setColorMode(latestRecord.mode);
     setFeedback(calculateScore(latestRecord.target, latestRecord.guess, locale));
     setSaveStatus("saved");
@@ -62,18 +65,44 @@ const Practice: React.FC = () => {
 
 
   const resetRound = () => {
-    setTargetColor(generateRandomColor());
-    setUserColor({ h: 0, s: 0, v: 0 });
+    if (lockedChannels.length === 3) return;
+    const nextTarget = applyChannelLocks(randomizeUnlocked(targetColor, colorMode, []), colorMode, lockedValues);
+    setTargetColor(nextTarget);
+    setSelection(constrainSelection(selectionFromHsv({ h: 0, s: 0, v: 0 }), colorMode, lockedValues));
     setFeedback(null);
     setSaveStatus(null);
     setShowFeedbackMarkers(false);
   };
 
   const handleTargetChange = (newColor: HSV) => {
-    setTargetColor(newColor);
+    setTargetColor(applyChannelLocks(newColor, colorMode, lockedValues));
     setFeedback(null);
     setSaveStatus(null);
     setShowFeedbackMarkers(false);
+  };
+
+  const handleUserChange = (color: HSV) => {
+    setSelection((current) => constrainSelection(selectionFromHsv(color, current.hsl), colorMode, lockedValues));
+  };
+
+  const handleHslChange = (color: HSL) => {
+    setSelection(constrainSelection(selectionFromHsl(color), colorMode, lockedValues));
+  };
+
+  const handleLockToggle = (channel: Channel) => {
+    const nextLocks = toggleChannelLock(lockedValues, userColor, colorMode, channel, selection.hsl);
+    setLockedValues(nextLocks);
+    setSelection((current) => constrainSelection(current, colorMode, nextLocks));
+    setTargetColor((color) => applyChannelLocks(color, colorMode, nextLocks));
+    setFeedback(null);
+    setSaveStatus(null);
+    setShowFeedbackMarkers(false);
+  };
+
+  const handleModeChange = (mode: ColorMode) => {
+    if (mode === colorMode) return;
+    setColorMode(mode);
+    setLockedValues({});
   };
 
   const handleSubmit = () => {
@@ -169,17 +198,23 @@ const Practice: React.FC = () => {
             onTabChange={setActiveTab}
             onTargetChange={handleTargetChange}
             onReset={resetRound}
+            mode={colorMode}
+            lockedChannels={lockedChannels}
+            onLockToggle={handleLockToggle}
           />
 
           <PaletteControls
             userColor={userColor}
+            userHsl={selection.hsl}
             targetColor={targetColor}
-            onChange={setUserColor}
+            onChange={handleUserChange}
+            onHslChange={handleHslChange}
             onSubmit={handleSubmit}
             onNext={resetRound}
             showFeedbackMarkers={showFeedbackMarkers}
             mode={colorMode}
-            setMode={setColorMode}
+            setMode={handleModeChange}
+            lockedChannels={lockedChannels}
           />
         </div>
 

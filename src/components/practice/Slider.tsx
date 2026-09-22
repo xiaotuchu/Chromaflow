@@ -9,6 +9,7 @@ interface SliderProps {
     onChange: (val: number) => void;
     trackStyle: React.CSSProperties;
     feedbackMark?: number; // raw value on the same scale as the slider (0..max)
+    disabled?: boolean;
 }
 
 const Slider: React.FC<SliderProps> = ({
@@ -19,6 +20,7 @@ const Slider: React.FC<SliderProps> = ({
     onChange,
     trackStyle,
     feedbackMark,
+    disabled = false,
 }) => {
     const normalizedMark = feedbackMark !== undefined ? (Math.min(Math.max(feedbackMark, 0), max) / max) * 100 : undefined;
     const trackRef = useRef<HTMLDivElement>(null);
@@ -47,7 +49,7 @@ const Slider: React.FC<SliderProps> = ({
     }, [normalizedMark]);
 
     return (
-        <div className="space-y-2 md:space-y-4 relative transition-all duration-300">
+        <div className={`space-y-2 md:space-y-4 relative transition-all duration-300 ${disabled ? 'opacity-45 grayscale' : ''}`}>
             <div className="flex justify-between items-center">
                 <label className="text-xs md:text-sm font-bold transition-colors text-slate-700">{label}</label>
                 <span className="text-[10px] md:text-xs font-mono px-2 py-0.5 md:py-1 rounded border transition-all bg-slate-100 text-slate-600 border-slate-200">
@@ -57,11 +59,13 @@ const Slider: React.FC<SliderProps> = ({
             <div className="relative h-4 flex items-center" ref={trackRef}>
                 <input 
                     type="range" 
+                    aria-label={label}
+                    disabled={disabled}
                     min="0" 
                     max={max} 
                     value={value}
                     onChange={(e) => onChange(Number(e.target.value))}
-                    className="w-full h-3 md:h-4 rounded-full appearance-none cursor-pointer z-10 relative"
+                    className="w-full h-3 md:h-4 rounded-full appearance-none cursor-pointer disabled:cursor-not-allowed z-10 relative"
                     style={trackStyle}
                 />
                 {markLeft !== null && (

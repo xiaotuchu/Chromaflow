@@ -53,7 +53,7 @@ export default function History() {
   const currentPage = Math.min(page, totalPages);
   const grouped: Record<string, HistoryItem[]> = {};
   filtered.slice((currentPage - 1) * 5, currentPage * 5).forEach(item => (grouped[item.date] ??= []).push(item));
-  const average = history.length ? Math.round(history.reduce((sum, item) => sum + item.accuracy, 0) / history.length) : 0;
+  const average = history.length ? history.reduce((sum, item) => sum + item.accuracy, 0) / history.length : 0;
   return <div className="min-h-screen bg-slate-50 pb-16"><Navbar/>
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28">
       <div className="flex flex-col lg:flex-row gap-8 items-start">
@@ -67,7 +67,7 @@ export default function History() {
               <p className="text-sm text-slate-500 leading-6">{zh ? '自动保存最近 50 次练习，仅保存在当前浏览器。清除浏览器数据会删除记录，不支持跨设备同步。' : 'Your latest 50 rounds are saved in this browser. Clearing browser data deletes them. History does not sync across devices.'}</p>
               <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
                 <p className="rounded-xl bg-slate-50 px-3 py-3 font-semibold text-slate-700">{zh ? '已保存' : 'Saved'}<span className="mt-1 block text-lg text-slate-900">{history.length}/50</span></p>
-                <p className="rounded-xl bg-slate-50 px-3 py-3 font-semibold text-slate-700">{zh ? '平均分' : 'Average'}<span className="mt-1 block text-lg text-slate-900">{average}</span></p>
+                <p className="rounded-xl bg-slate-50 px-3 py-3 font-semibold text-slate-700">{zh ? '平均分' : 'Average'}<span className="mt-1 block text-lg text-slate-900">{average.toFixed(2)}</span></p>
               </div>
               <div className="mt-5 flex flex-col gap-3">
                 <button disabled={!records.length} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1e293b] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40" onClick={() => {
