@@ -4,7 +4,7 @@
 
 Chromaflow 完全在浏览器中运行，无需账号或应用后端。支持中文和英文界面，练习记录保存在本机浏览器中。
 
-在线体验：[chromaflow.xiaotu.asia](https://chromaflow.xiaotu.asia/#/zh/)
+在线体验：[xiaotuchu.github.io/Chromaflow](https://xiaotuchu.github.io/Chromaflow/)
 
 ## 功能
 
