@@ -275,7 +275,7 @@ const PaletteControls: React.FC<PaletteControlsProps> = ({
         {hueView === 'ring' && <span className={`font-mono ml-auto ${hueDisabled ? 'text-slate-400' : 'text-slate-600'}`}>H {Math.round(userColor.h)}°</span>}
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-1 flex-col justify-center gap-6">
         <div className="md:hidden flex flex-col gap-4">
           <div className="flex items-center gap-2 sm:gap-4 h-36 sm:h-40 min-w-0">
             <ColorPlane color={userColor} onChange={onChange} shape={shape} hueView={hueView}
@@ -314,7 +314,7 @@ const PaletteControls: React.FC<PaletteControlsProps> = ({
           </div>
         </div>
 
-        <div className="hidden md:flex flex-col md:flex-row gap-8">
+        <div className="hidden md:flex flex-col md:flex-row items-center gap-8">
           <ColorPlane color={userColor} onChange={onChange} shape={shape} hueView={hueView}
             hueDisabled={hueDisabled} planeDisabled={planeDisabled}
             targetHue={showFeedbackMarkers ? targetColor.h : undefined}
@@ -358,7 +358,7 @@ const PaletteControls: React.FC<PaletteControlsProps> = ({
         </div>
       </div>
 
-      <div className="flex-grow min-h-6" />
+      <div className="h-6 shrink-0" />
       <div className="flex gap-3 md:gap-4 pt-4 border-t border-slate-100">
         <button
           onClick={onSubmit}
